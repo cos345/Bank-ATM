@@ -26,13 +26,16 @@ class BankShelf:
 
     def select(self, username, key=None):
         # this function returns values of keys OR returns a a username if exists in shelf
-        try:
+        # returns None is usernam doesn't exist.
+        # returns username if exists and no key is provided.
+        # returns value if username exists and key is provided.
+                try:
             s = shelve.open('bankShelf')
             value = None
-            if key:
-                value = s[username][key]
-            else:
-                if username in s.keys():
+            if username in s.keys():
+                if key:
+                    value = s[username][key]
+                else:
                     value = username
             s.close()
             return value
