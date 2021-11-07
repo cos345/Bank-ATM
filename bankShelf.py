@@ -29,7 +29,7 @@ class BankShelf:
         # returns None is usernam doesn't exist.
         # returns username if exists and no key is provided.
         # returns value if username exists and key is provided.
-                try:
+        try:
             s = shelve.open('bankShelf')
             value = None
             if username in s.keys():
