@@ -22,7 +22,7 @@ class BankShelf:
         try:
             s = shelve.open('bankShelf', writeback=True)
             if username not in s.keys():
-                s[username] = {'password': password, 'balance': 0, 'frozen': False, 'failed_login': 0}
+                s[username] = {'password': password, 'balance': 0, 'frozen': False, 'failed_login': 0, 'admin': False}
                 result = username
             else:  # username already exists
                 result = None
