@@ -1,6 +1,5 @@
-from bankShelf import BankShelf
-
-bankSystem = BankShelf()
-
-def checkatm():
-    
+def checkatmbalance():
+    f = open("atmbalance.txt", "r")
+    bal = f.readline()
+    print(bal)
+    return bal
