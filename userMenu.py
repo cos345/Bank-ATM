@@ -3,24 +3,28 @@ from tkinter import ttk
 
 class MainWindow:
 
-    """Create main tkinter window for logging in"""
+    """Create main tkinter window for user menu"""
     def __init__(self):
         """Initialise widgets including tabs and other frames"""
         self.app = tkinter.Tk()
-        self.app.geometry("400x400")
+        self.app.geometry("600x600")
         self.tab_control = ttk.Notebook(self.app)
-        self.user_login = UserLogin(self.tab_control)
-        self.admin_login = AdminLogin(self.tab_control)
-        self.create_account = CreateAccount(self.tab_control)
+        self.check_balance = CheckBalance(self.tab_control)
+        self.transfer_funds = TransferFunds(self.tab_control)
+        self.change_password = ChangePassword(self.tab_control)
+        self.withdraw_funds = WithdrawFunds(self.tab_control)
+        self.deposit_funds = DepositFunds(self.tab_control)
         self.declare_tabs()
-        self.app.title("ATM Login")
+        self.app.title("User Menu")
         self.app.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def declare_tabs(self):
         """Create tabs based on other frames"""
-        self.tab_control.add(self.user_login.frame, text='User Login')
-        self.tab_control.add(self.create_account.frame, text='Create Account')
-        self.tab_control.add(self.admin_login.frame, text='Admin Login')
+        self.tab_control.add(self.check_balance.frame, text='Check Balance')
+        self.tab_control.add(self.transfer_funds.frame, text='Transfer Funds')
+        self.tab_control.add(self.change_password.frame, text='Change Password')
+        self.tab_control.add(self.withdraw_funds.frame, text='Withdraw Funds')
+        self.tab_control.add(self.deposit_funds.frame, text='Deposit Funds')
         self.tab_control.grid(row=0, column=0)
 
     def on_closing(self):
@@ -45,15 +49,14 @@ class CheckBalance:
         self.balance.grid(row=1, column=0)
 
     def on_press(self):
-        """When button is pressed call login functions based on entries. Open new window with account menu if successful
-        else show error message"""
+        """When the button is pressed, refresh the balance on the screen"""
         # extract balance from system
         # set the balance label text to extracted balance
         print(1)
 
 
 class TransferFunds:
-    """Frame for checking balance"""
+    """Frame for transferring funds"""
     def __init__(self, parent):
         """Initialise all of the widgets"""
         self.parent = parent
@@ -72,8 +75,9 @@ class TransferFunds:
         self.message.grid(row=3, column=0)
 
     def on_press(self):
-        """When button is pressed call login functions based on entries. Open new window with account menu if successful
-        else show error message"""
+        """When button is pressed get the user input, and based on the input transfer the specified amount to the
+        target account. Call function that handles validation and checks if balance is sufficient. Return message with
+        either success or error"""
         target = self.target.get()
         amount = self.amount.get()
         # Do error checking on input
@@ -83,7 +87,7 @@ class TransferFunds:
         print(1)
 
 class ChangePassword:
-    """Frame for checking balance"""
+    """Frame for changing password"""
     def __init__(self, parent):
         """Initialise all of the widgets"""
         self.parent = parent
@@ -91,6 +95,7 @@ class ChangePassword:
         self.password = tkinter.Entry(self.frame, show="*")
         self.confirm_password = tkinter.Entry(self.frame, show="*")
         self.message = tkinter.Label(self.frame, text="")
+        self.position()
 
     def position(self):
         """Position all the widgets on the frame"""
@@ -99,14 +104,67 @@ class ChangePassword:
         self.message.grid(row=2, column=0)
 
     def on_press(self):
-        """When button is pressed call login functions based on entries. Open new window with account menu if successful
-        else show error message"""
+        """When button is pressed, validate the input, and change the users password to the new password. Return
+        message of success or error"""
         password = self.password.get()
         confirm_password = self.confirm_password.get()
 
         # Communicate with system to change password
 
         print(1)
+
+
+class WithdrawFunds:
+    """Frame for withdrawing funds"""
+    def __init__(self, parent):
+        """Initialise all of the widgets"""
+        self.parent = parent
+        self.frame = tkinter.Frame(self.parent)
+        self.message = tkinter.Label(self.frame, text="")
+        self.amount = tkinter.Entry(self.frame)
+        self.withdraw_button = tkinter.Button(self.frame, text="Withdraw", command=self.on_press)
+        self.position()
+
+    def position(self):
+        """Position all the widgets on the frame"""
+        self.amount.grid(row=0, column=0)
+        self.withdraw_button.grid(row=1, column=0)
+        self.message.grid(row=2, column=0)
+
+    def on_press(self):
+        """When button is pressed call withdrawing function that will take the user input, validate it, and return a
+        message of whether the amount was withdrawn successfully or not"""
+        amount = self.amount.get()
+        # Subtract amount from account
+        # Display how much money was withdrawn
+        print(1)
+
+
+class DepositFunds:
+    """Frame for depositing funds"""
+    def __init__(self, parent):
+        """Initialise all of the widgets"""
+        self.parent = parent
+        self.frame = tkinter.Frame(self.parent)
+        self.message = tkinter.Label(self.frame, text="")
+        self.amount = tkinter.Entry(self.frame)
+        self.deposit_button = tkinter.Button(self.frame, text="Deposit", command=self.on_press)
+        self.position()
+
+    def position(self):
+        """Position all the widgets on the frame"""
+        self.amount.grid(row=0, column=0)
+        self.deposit_button.grid(row=1, column=0)
+        self.message.grid(row=2, column=0)
+
+    def on_press(self):
+        """When button is pressed call deposit funds function, validate input and insert specified amount into account.
+        Return success or error message"""
+        amount = self.amount.get()
+        # Add amount to account
+        # Display how much money was deposited
+        print(1)
+
 
 
 # Create instance of tkinter window
