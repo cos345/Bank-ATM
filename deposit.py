@@ -1,6 +1,6 @@
 from bankShelf import BankShelf
 
-bankSystem = BankShelf(name)
+bankSystem = BankShelf()
 
 def deposit(username):
     account_bal = bankSystem.select(username, 'balance')
