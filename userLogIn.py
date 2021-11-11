@@ -42,7 +42,7 @@ def userLogIn(username, password):
     return message
 
 # test using correct username and password combination
-# userLogIn("user1", "password1")
+#userLogIn("user1", "password1")
 # test using incorrect username and password combination
-# userLogIn("user1", "password2")
+#userLogIn("user1", "password2")
 

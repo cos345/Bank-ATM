@@ -25,4 +25,4 @@ def deposit(username):
     print(message)
     return message
 
-#deposit("user1")
+deposit("user1")

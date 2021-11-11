@@ -13,5 +13,5 @@ def createAccount(username, password):
     print(message)
     return message
 
-
-# createAccount("user1", "password1")
+#createAccount("user1","password1")
+createAccount("user2","password2")

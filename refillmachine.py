@@ -7,6 +7,8 @@ def refill(amount):
         print("The ATM is full. It cannot be refilled.")
     elif amount < 0 or amount > 50000:
         print("Please specify any number up to 50000.")
+    elif (amount + bal) > 50000:
+        message = "Please specify any number up to " + str(50000-bal)
     elif bal < 50000 and amount <= 50000 - bal:
         message = "ATM refilled. Current balance is " + str(bal) + str(amount)
         f = open("atmbalance.txt", "w")
