@@ -1,3 +1,4 @@
+
 def refill(amount):
     f = open("atmbalance.txt", "r")
     bal = int(f.readline())
@@ -14,3 +15,4 @@ def refill(amount):
 
     print(message)
     return message
+

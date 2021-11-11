@@ -4,8 +4,12 @@ bankSystem = BankShelf()
 
 def change_password(username):
     password = change_password.get()
-    bankSystem.update(username, 'password', password)
-    message = "Password changed successfully"
+    result = bankSystem.update(username, 'password', password)
+    error_msg = shelfErrorCheck(account_bal)
+    if error_msg:
+        message = error_msg
+    else:
+        message = "Password changed successfully"
     print(message)
     return message
 

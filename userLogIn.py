@@ -22,8 +22,9 @@ def userLogIn(username, password):
             # if returns None, username doesn't exist
             message = "There was a problem with your username/password."
             failed_login = bankSystem.select(username, 'failed_login')  # retrieve number of failed_logins
-            if failed_login == "Error":  # if failed_login retrieval returns Error
-                message = system_error_msg
+            error_msg = shelfErrorCheck(failed_login)
+            if error_msg:
+                message = error_msg
             elif failed_login >= 3:  # if user has failed to login at least 3 times
                 # account is frozen ( unless Error occurs in shelf)
                 if bankSystem.update(username, 'frozen', True) != "Error":
