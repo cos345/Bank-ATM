@@ -4,16 +4,17 @@ from tkinter import ttk
 class MainWindow:
 
     """Create main tkinter window for user menu"""
-    def __init__(self):
+    def __init__(self, atm):
         """Initialise widgets including tabs and other frames"""
         self.app = tkinter.Tk()
+        self.atm = atm
         self.app.geometry("600x600")
         self.tab_control = ttk.Notebook(self.app)
-        self.check_balance = CheckBalance(self.tab_control)
-        self.transfer_funds = TransferFunds(self.tab_control)
-        self.change_password = ChangePassword(self.tab_control)
-        self.withdraw_funds = WithdrawFunds(self.tab_control)
-        self.deposit_funds = DepositFunds(self.tab_control)
+        self.check_balance = CheckBalance(self.tab_control, self.atm)
+        self.transfer_funds = TransferFunds(self.tab_control, self.atm)
+        self.change_password = ChangePassword(self.tab_control, self.atm)
+        self.withdraw_funds = WithdrawFunds(self.tab_control, self.atm)
+        self.deposit_funds = DepositFunds(self.tab_control, self.atm)
         self.declare_tabs()
         self.app.title("User Menu")
         self.app.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -34,32 +35,38 @@ class MainWindow:
 
 class CheckBalance:
     """Frame for checking balance"""
-    def __init__(self, parent):
+    def __init__(self, parent, atm):
         """Initialise all of the widgets"""
         self.parent = parent
+        self.atm = atm
         self.frame = tkinter.Frame(self.parent)
         self.message = tkinter.Label(self.frame, text="Your current balance is:")
         self.balance = tkinter.Label(self.frame, text="")
         self.refresh_button = tkinter.Button(self.frame, text="Refresh", command=self.on_press)
         self.position()
+        self.on_press()
 
     def position(self):
         """Position all the widgets on the frame"""
         self.message.grid(row=0, column=0)
         self.balance.grid(row=1, column=0)
+        self.refresh_button.grid(row=2, column=0)
 
     def on_press(self):
         """When the button is pressed, refresh the balance on the screen"""
         # extract balance from system
+        balance = self.atm.check_balance()
+        self.balance['text'] = str(balance)
         # set the balance label text to extracted balance
         print(1)
 
 
 class TransferFunds:
     """Frame for transferring funds"""
-    def __init__(self, parent):
+    def __init__(self, parent ,atm):
         """Initialise all of the widgets"""
         self.parent = parent
+        self.atm = atm
         self.frame = tkinter.Frame(self.parent)
         self.target = tkinter.Entry(self.frame)
         self.amount = tkinter.Entry(self.frame)
@@ -80,6 +87,8 @@ class TransferFunds:
         either success or error"""
         target = self.target.get()
         amount = self.amount.get()
+        message = self.atm.transfer_funds(target, int(amount))
+        self.message['text'] = message
         # Do error checking on input
         # run function to transfer funds
         # Return message with either success or failure
@@ -88,12 +97,14 @@ class TransferFunds:
 
 class ChangePassword:
     """Frame for changing password"""
-    def __init__(self, parent):
+    def __init__(self, parent, atm):
         """Initialise all of the widgets"""
         self.parent = parent
+        self.atm = atm
         self.frame = tkinter.Frame(self.parent)
         self.password = tkinter.Entry(self.frame, show="*")
         self.confirm_password = tkinter.Entry(self.frame, show="*")
+        self.change_password_button = tkinter.Button(self.frame, text="Change password", command=self.on_press)
         self.message = tkinter.Label(self.frame, text="")
         self.position()
 
@@ -101,14 +112,19 @@ class ChangePassword:
         """Position all the widgets on the frame"""
         self.password.grid(row=0, column=0)
         self.confirm_password.grid(row=1, column=0)
-        self.message.grid(row=2, column=0)
+        self.change_password_button.grid(row=2, column=0)
+        self.message.grid(row=3, column=0)
 
     def on_press(self):
         """When button is pressed, validate the input, and change the users password to the new password. Return
         message of success or error"""
         password = self.password.get()
         confirm_password = self.confirm_password.get()
-
+        if password == confirm_password:
+            message = self.atm.change_password(password)
+            self.message['text'] = message
+        else:
+            self.message['text'] = "Passwords do not match"
         # Communicate with system to change password
 
         print(1)
@@ -116,9 +132,10 @@ class ChangePassword:
 
 class WithdrawFunds:
     """Frame for withdrawing funds"""
-    def __init__(self, parent):
+    def __init__(self, parent, atm):
         """Initialise all of the widgets"""
         self.parent = parent
+        self.atm = atm
         self.frame = tkinter.Frame(self.parent)
         self.message = tkinter.Label(self.frame, text="")
         self.amount = tkinter.Entry(self.frame)
@@ -135,6 +152,8 @@ class WithdrawFunds:
         """When button is pressed call withdrawing function that will take the user input, validate it, and return a
         message of whether the amount was withdrawn successfully or not"""
         amount = self.amount.get()
+        message = self.atm.withdraw_funds(int(amount))
+        self.message['text'] = message
         # Subtract amount from account
         # Display how much money was withdrawn
         print(1)
@@ -142,9 +161,10 @@ class WithdrawFunds:
 
 class DepositFunds:
     """Frame for depositing funds"""
-    def __init__(self, parent):
+    def __init__(self, parent, atm):
         """Initialise all of the widgets"""
         self.parent = parent
+        self.atm = atm
         self.frame = tkinter.Frame(self.parent)
         self.message = tkinter.Label(self.frame, text="")
         self.amount = tkinter.Entry(self.frame)
@@ -160,13 +180,13 @@ class DepositFunds:
     def on_press(self):
         """When button is pressed call deposit funds function, validate input and insert specified amount into account.
         Return success or error message"""
+        print(self.atm.username)
         amount = self.amount.get()
+        message = self.atm.deposit_funds(int(amount))
+        self.message['text'] = message
         # Add amount to account
         # Display how much money was deposited
         print(1)
 
 
 
-# Create instance of tkinter window
-application = MainWindow()
-application.app.mainloop()

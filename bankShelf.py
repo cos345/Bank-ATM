@@ -7,14 +7,27 @@ class BankShelf:
         # for incrementing failed login counter you have to first use the select function to retrieve the current value
         try:
             s = shelve.open('bankShelf', writeback=True)
+            l1 = []
+            l2 = []
+
+            for i in s.keys():
+                l1.append(i)
+            for j in s.values():
+                l2.append(j)
+            print(l1)
+            print(l2)
             if username in s.keys():  # check if username exists first
                 s[username][key] = value
                 result = username
+                print('yes')
             else:  # returns None if username doesn't exist
                 result = None
+                print('maybe')
             s.close()
             return result  # returns username, key and new value if operation successful
         except:
+            print('no')
+
             return 'Error'  # returns 'Error' if operation unsuccessful
 
     def insert(self, username, password):
@@ -46,5 +59,28 @@ class BankShelf:
                     value = username
             s.close()
             return value
+        except:
+            return 'Error'
+
+    def keys(self):
+        try:
+            s = shelve.open('bankShelf')
+            keys = s.keys()
+            s.close()
+            return keys
+        except:
+            return 'Error'
+
+    def debug(self):
+        try:
+            s = shelve.open('bankShelf')
+            l = []
+            l1 = []
+            for i in s.keys():
+                l.append(i)
+            for j in s.values():
+                l1.append(j)
+            s.close()
+            return (l, l1)
         except:
             return 'Error'

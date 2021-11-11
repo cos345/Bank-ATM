@@ -4,22 +4,21 @@ class Interface:
 
     def check_atm_balance(self):
         shelf = shelve.open("ATM_File", writeback=False)
-        if "balance" not in shelf.keys():
-            shelf["balance"] = 50,000
         value = shelf["balance"]
         shelf.close()
         return value
 
     def change_atm_balance(self, amount):
+        # check for negative values that are not intentional, temporarily removed
         bal = self.check_atm_balance()
         message = ""
         if bal == 50000:
             message = "The ATM is full. It cannot be refilled."
-        elif amount < 0 or amount > 50000:
+        elif amount > 50000:
             message = "Please specify any number up to 50000."
         elif (amount + bal) > 50000:
             message = "Please specify any number up to " + str(50000-bal)
-        elif bal < 50000 and amount <= 50000 - bal:
+        else:
             message = "ATM refilled. Current balance is " + str(bal + amount)
             shelf = shelve.open("ATM_File", writeback=True)
             shelf["balance"] = bal + amount
@@ -38,5 +37,6 @@ class Interface:
         # Check if user in database
         message = "Success"
         return message
+
 
 
