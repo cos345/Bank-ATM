@@ -135,7 +135,7 @@ class ATM:
                 if error_msg:
                     message = error_msg
                 else:
-                    message = "Withdrawal of %d successful.\n New Balance: %d" % (withdraw_amount, account_bal)
+                    message = "Withdrawal of %d successful.\n New Balance: %d" % (-1*withdraw_amount, account_bal)
         print(message)
         return message
 

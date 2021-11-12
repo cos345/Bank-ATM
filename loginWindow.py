@@ -143,8 +143,9 @@ class CreateAccount:
         self.password = tkinter.Entry(self.frame, show="*")
         self.confirm_password_label = tkinter.Label(self.frame, text="Confirm password:")
         self.confirm_password = tkinter.Entry(self.frame, show="*")
+        self.message = tkinter.Label(self.frame, text="", wraplength=200)
         self.create_button = tkinter.Button(self.frame, command=self.on_press, text="Create account")
-        self.message = tkinter.Label(self.frame, text="", width="50", height="50", wraplength=200)
+        self.padding = tkinter.Label(self.frame, text="", width="50", height="50")
         self.position()
 
     def position(self):
@@ -156,8 +157,9 @@ class CreateAccount:
         self.password.grid(row=2, column=1, sticky="w")
         self.confirm_password_label.grid(row=3, column=0, sticky="e")
         self.confirm_password.grid(row=3, column=1, sticky="w")
-        self.create_button.grid(row=4, column=1)
-        self.message.grid(row=5, column=1, sticky="n", columnspan=2)
+        self.create_button.grid(row=4, column=1, sticky="w")
+        self.message.grid(row=5, column=1, sticky="w")
+        self.padding.grid(row=6, column=1, sticky="n", columnspan=2)
         # Can add a feature where shows if passwords match each other or not
         # Can add feature that checks if name exists in database already
 
