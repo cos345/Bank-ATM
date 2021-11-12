@@ -19,15 +19,11 @@ class BankShelf:
             if username in s.keys():  # check if username exists first
                 s[username][key] = value
                 result = username
-                print('yes')
             else:  # returns None if username doesn't exist
                 result = None
-                print('maybe')
             s.close()
             return result  # returns username, key and new value if operation successful
         except:
-            print('no')
-
             return 'Error'  # returns 'Error' if operation unsuccessful
 
     def insert(self, username, password):

@@ -10,7 +10,7 @@ class MainWindow:
         """Initialise widgets including tabs and other frames"""
         self.app = tkinter.Tk()
         self.atm = atm
-        self.app.geometry("600x600")
+        self.app.geometry("600x400")
         self.tab_control = ttk.Notebook(self.app)
         self.check_ATM_balance = CheckATMBalance(self.tab_control, self.atm)
         self.refill_machine = RefillMachine(self.tab_control, self.atm)
@@ -41,6 +41,7 @@ class CheckATMBalance:
         self.message = tkinter.Label(self.frame, text="The ATM balance is:")
         self.balance = tkinter.Label(self.frame, text="")
         self.refresh_button = tkinter.Button(self.frame, text="Refresh", command=self.on_press)
+        self.padding = tkinter.Label(self.frame, text="", width="100", height="50")
         self.position()
         self.on_press()
 
@@ -49,6 +50,7 @@ class CheckATMBalance:
         self.message.grid(row=0, column=0)
         self.balance.grid(row=1, column=0)
         self.refresh_button.grid(row=2, column=0)
+        self.padding.grid(row=3, column=1)
 
     def on_press(self):
         """When the button is pressed, refresh the ATM balance on the screen"""
@@ -67,14 +69,16 @@ class RefillMachine:
         self.parent = parent
         self.atm = atm
         self.frame = tkinter.Frame(self.parent)
+        self.heading = tkinter.Label(self.frame, text="Refill Machine")
         self.amount_label = tkinter.Label(self.frame, text="Refill amount:")
         self.amount = tkinter.Entry(self.frame)
         self.refill = tkinter.Button(self.frame, text="Refill", command=self.on_press)
-        self.message = tkinter.Label(self.frame, text="")
+        self.message = tkinter.Label(self.frame, text="", wraplength=200)
         self.position()
 
     def position(self):
         """Position all the widgets on the frame"""
+        self.heading.grid(row=0, column=1)
         self.amount_label.grid(row=1, column=0)
         self.amount.grid(row=1, column=1)
         self.refill.grid(row=2, column=1)
@@ -97,18 +101,20 @@ class UnfreezeAccount:
         self.parent = parent
         self.atm = atm
         self.frame = tkinter.Frame(self.parent)
+        self.heading = tkinter.Label(self.frame, text="Unfreeze Account")
         self.target_label = tkinter.Label(self.frame, text="Target Account:")
         self.target = tkinter.Entry(self.frame)
         self.unfreeze_button = tkinter.Button(self.frame, command=self.on_press, text="Unfreeze")
-        self.message = tkinter.Label(self.frame, text="")
+        self.message = tkinter.Label(self.frame, text="", wraplength=200)
         self.position()
 
     def position(self):
         """Position all the widgets on the frame"""
-        self.target_label.grid(row=0, column=0)
-        self.target.grid(row=0, column=1)
-        self.unfreeze_button.grid(row=1, column=1)
-        self.message.grid(row=2, column=1)
+        self.heading.grid(row=0, column=1)
+        self.target_label.grid(row=1, column=0)
+        self.target.grid(row=1, column=1)
+        self.unfreeze_button.grid(row=2, column=1)
+        self.message.grid(row=3, column=1)
 
     def on_press(self):
         """When button is pressed, validate the input, and change the users frozen state to unfrozen. Return

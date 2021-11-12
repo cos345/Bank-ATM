@@ -120,6 +120,9 @@ class ATM:
                 message = "Please enter an integer between 20 and 1000."
             elif withdraw_amount > account_bal:
                 message = "Amount exceeds current balance."
+            if self.check_atm_balance() < withdraw_amount:
+                message = "Amount exceeds current ATM balance. Please contact an administrator."
+                return message
             # Check if amount is valid
             # Else successfully withdraw amount
             else:

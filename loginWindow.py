@@ -42,7 +42,7 @@ class UserLogin:
         self.username = tkinter.Entry(self.frame)
         self.password_label = tkinter.Label(self.frame, text="Enter password:")
         self.password = tkinter.Entry(self.frame, show="*")
-        self.message = tkinter.Label(self.frame, text="")
+        self.message = tkinter.Label(self.frame, text="", wraplength=200)
         self.login_button = tkinter.Button(self.frame, command=self.on_press, text="Log in")
         self.login_label = tkinter.Label(self.frame, text="User login")
         self.position()
@@ -67,11 +67,17 @@ class UserLogin:
         message = self.atm.user_log_in(name, password)
         # based on message determine if next step should occur or not
         print(self.atm.bankSystem.debug())
-        self.atm.username = name
-        UM = userMenu.MainWindow(self.atm)
-        UM.app.mainloop()
-        self.username.delete(0, tkinter.END)
-        self.password.delete(0, tkinter.END)
+        print("Message = " + message)
+        if message == "Log in successful.":
+            self.atm.username = name
+            self.username.delete(0, 'end')
+            self.password.delete(0, 'end')
+            UM = userMenu.MainWindow(self.atm)
+            UM.app.mainloop()
+        else:
+            self.message['text'] = message
+        self.username.delete(0, 'end')
+        self.password.delete(0, 'end')
         # open window with user options
 
 
@@ -86,7 +92,7 @@ class AdminLogin:
         self.username = tkinter.Entry(self.frame, text="Username")
         self.password_label = tkinter.Label(self.frame, text="Enter password:")
         self.password = tkinter.Entry(self.frame, show="*")
-        self.message = tkinter.Label(self.frame, text="")
+        self.message = tkinter.Label(self.frame, text="", wraplength=200)
         self.login_button = tkinter.Button(self.frame, command=self.on_press, text="Log in")
         self.login_label = tkinter.Label(self.frame, text="Admin login")
         self.position()
@@ -100,7 +106,7 @@ class AdminLogin:
         self.password_label.grid(row=2, column=0, sticky="w")
         self.password.grid(row=2, column=1, sticky="e")
         self.login_button.grid(row=2, column=2, sticky="w")
-        self.message.grid(row=3, column=0, sticky="e")
+        self.message.grid(row=3, column=1, sticky="e")
 
     def on_press(self):
         """When button is pressed call login functions based on entries. Open new window with account menu if successful
@@ -109,12 +115,18 @@ class AdminLogin:
         password = self.password.get()
         # call login function, give name password as arguments
         message = self.atm.admin_log_in(name, password)
-        self.atm.username = name
-        AM = adminMenu.MainWindow(self.atm)
-        AM.app.mainloop()
+        print("Message = " + message)
+        if message == "Success":
+            self.atm.username = name
+            self.username.delete(0, 'end')
+            self.password.delete(0, 'end')
+            AM = adminMenu.MainWindow(self.atm)
+            AM.app.mainloop()
+        else:
+            self.message['text'] = message
         # based on message determine if next step should occur or not
-        self.username.delete(0, tkinter.END)
-        self.password.delete(0, tkinter.END)    # clear both fields after button press
+        self.username.delete(0, 'end')
+        self.password.delete(0, 'end')    # clear both fields after button press
         # open window with admin options
 
 class CreateAccount:
@@ -132,7 +144,7 @@ class CreateAccount:
         self.confirm_password_label = tkinter.Label(self.frame, text="Confirm password:")
         self.confirm_password = tkinter.Entry(self.frame, show="*")
         self.create_button = tkinter.Button(self.frame, command=self.on_press, text="Create account")
-        self.message = tkinter.Label(self.frame, text="", width="50", height="50")
+        self.message = tkinter.Label(self.frame, text="", width="50", height="50", wraplength=200)
         self.position()
 
     def position(self):
