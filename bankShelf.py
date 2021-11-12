@@ -80,3 +80,8 @@ class BankShelf:
             return (l, l1)
         except:
             return 'Error'
+
+    def create_admin(self):
+        shelf = shelve.open('bankShelf', writeback=True)
+        shelf['admin'] = {'password':'admin', 'admin':True}
+        shelf.close()

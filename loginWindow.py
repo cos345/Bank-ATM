@@ -108,6 +108,8 @@ class AdminLogin:
         self.login_button.grid(row=2, column=2, sticky="w")
         self.message.grid(row=3, column=1, sticky="e")
 
+
+
     def on_press(self):
         """When button is pressed call login functions based on entries. Open new window with account menu if successful
         else show error message"""

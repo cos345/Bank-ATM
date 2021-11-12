@@ -17,6 +17,7 @@ class ATM:
         self.bankSystem = BankShelf()
         self.interface = Interface()
         self.username = self.interface.check_current_user()
+        self.bankSystem.create_admin()
 
     # --------------------------------------- user functions ----------------------------------------- #
 

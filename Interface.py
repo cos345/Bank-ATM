@@ -4,6 +4,8 @@ class Interface:
 
     def check_atm_balance(self):
         shelf = shelve.open("ATM_File", writeback=False)
+        if "balance" not in shelf.keys():
+            shelf["balance"] = 25000
         value = shelf["balance"]
         shelf.close()
         return value
@@ -37,6 +39,7 @@ class Interface:
         # Check if user in database
         message = "Success"
         return message
+
 
 
 
