@@ -66,7 +66,6 @@ class UserLogin:
         # call login function, give name password as arguments
         message = self.atm.user_log_in(name, password)
         # based on message determine if next step should occur or not
-        print(self.atm.bankSystem.debug())
         print("Message = " + message)
         if message == "Log in successful.":
             self.atm.username = name

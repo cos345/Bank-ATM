@@ -99,7 +99,6 @@ class TransferFunds:
         # run function to transfer funds
         # Return message with either success or failure
         # Confirm how much was sent to what account
-        print(1)
 
 class ChangePassword:
     """Frame for changing password"""
@@ -139,8 +138,6 @@ class ChangePassword:
             self.message['text'] = "Passwords do not match"
         # Communicate with system to change password
 
-        print(1)
-
 
 class WithdrawFunds:
     """Frame for withdrawing funds"""
@@ -172,7 +169,6 @@ class WithdrawFunds:
         self.message['text'] = message
         # Subtract amount from account
         # Display how much money was withdrawn
-        print(1)
 
 
 class DepositFunds:
@@ -208,7 +204,6 @@ class DepositFunds:
         self.message['text'] = message
         # Add amount to account
         # Display how much money was deposited
-        print(1)
 
 
 
