@@ -165,7 +165,7 @@ class WithdrawFunds:
         """When button is pressed call withdrawing function that will take the user input, validate it, and return a
         message of whether the amount was withdrawn successfully or not"""
         amount = self.amount.get()
-        message = self.atm.withdraw_funds(int(amount))
+        message = self.atm.withdraw_funds(amount)
         self.message['text'] = message
         # Subtract amount from account
         # Display how much money was withdrawn
@@ -200,7 +200,7 @@ class DepositFunds:
         Return success or error message"""
         print(self.atm.username)
         amount = self.amount.get()
-        message = self.atm.deposit_funds(int(amount))
+        message = self.atm.deposit_funds(amount)
         self.message['text'] = message
         # Add amount to account
         # Display how much money was deposited

@@ -95,18 +95,22 @@ class ATM:
             message = error_msg
         else:
             # Check if amount is valid
-            if not isinstance(deposit_amount, int) or deposit_amount < 20 or deposit_amount > 1000:
-                message = "Please enter an integer between 20 and 1000."
-            # Else successfully deposit amount
-            else:
-                account_bal += deposit_amount
-                result = self.bankSystem.update(self.username, 'balance', account_bal)
-                self.interface.change_atm_balance(deposit_amount)
-                error_msg = shelf_error_check(result)
-                if error_msg:
-                    message = error_msg
+            if deposit_amount.isdigit():
+                deposit_amount = int(deposit_amount)
+                if deposit_amount < 20 or deposit_amount > 1000:
+                    message = "Please enter an integer between 20 and 1000."
+                # Else successfully deposit amount
                 else:
-                    message = "Deposit of %d successful." % deposit_amount
+                    account_bal += deposit_amount
+                    result = self.bankSystem.update(self.username, 'balance', account_bal)
+                    self.interface.change_atm_balance(deposit_amount)
+                    error_msg = shelf_error_check(result)
+                    if error_msg:
+                        message = error_msg
+                    else:
+                        message = "Deposit of %d successful." % deposit_amount
+            else:
+                message = "Please enter an integer between 20 and 1000."
         print(message)
         return message
 
@@ -118,30 +122,34 @@ class ATM:
             print("Cycle1")
         else:
             # Check amount vs account balance
-            if not isinstance(withdraw_amount, int) or withdraw_amount < 20 or withdraw_amount > 1000:
-                message = "Please enter an integer between 20 and 1000."
-                print("Cycle2")
-            elif withdraw_amount > account_bal:
-                message = "Amount exceeds current balance." 
-                print("Cycle3")
-            elif self.check_atm_balance() < withdraw_amount:
-                message = "Amount exceeds current ATM balance. Please contact an administrator."
-                print("Cycle4")
-                
-            # Check if amount is valid
-            # Else successfully withdraw amount
-            else:
-                account_bal -= withdraw_amount
-                print(withdraw_amount, 'withdraw from atm')
-                result = self.bankSystem.update(self.username, 'balance', account_bal)
-                self.interface.change_atm_balance(withdraw_amount)
-                error_msg = shelf_error_check(result)
-                if error_msg:
-                    message = error_msg
-                    print("Cycle6")
+            if withdraw_amount.isdigit():
+                withdraw_amount = int(withdraw_amount)
+                if withdraw_amount < 20 or withdraw_amount > 1000:
+                    message = "Please enter an integer between 20 and 1000."
+                    print("Cycle2")
+                elif withdraw_amount > account_bal:
+                    message = "Amount exceeds current balance."
+                    print("Cycle3")
+                elif self.check_atm_balance() < withdraw_amount:
+                    message = "Amount exceeds current ATM balance. Please contact an administrator."
+                    print("Cycle4")
+
+                # Check if amount is valid
+                # Else successfully withdraw amount
                 else:
-                    message = "Withdrawal of %d successful.\n New Balance: %d" % (withdraw_amount, account_bal)
-                    print("Cycle7")
+                    account_bal -= withdraw_amount
+                    print(withdraw_amount, 'withdraw from atm')
+                    result = self.bankSystem.update(self.username, 'balance', account_bal)
+                    self.interface.change_atm_balance(withdraw_amount)
+                    error_msg = shelf_error_check(result)
+                    if error_msg:
+                        message = error_msg
+                        print("Cycle6")
+                    else:
+                        message = "Withdrawal of %d successful.\n New Balance: %d" % (withdraw_amount, account_bal)
+                        print("Cycle7")
+            else:
+                message = "Please enter an integer between 20 and 1000."
         print(message)
         return message
 
