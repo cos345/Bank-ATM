@@ -115,28 +115,33 @@ class ATM:
         error_msg = shelf_error_check(account_bal)
         if error_msg:
             message = error_msg
+            print("Cycle1")
         else:
             # Check amount vs account balance
-            if not isinstance(withdraw_amount, int) or withdraw_amount < 20 or withdraw_amount > 1000 or withdraw_amount != float:
+            if not isinstance(withdraw_amount, int) or withdraw_amount < 20 or withdraw_amount > 1000:
                 message = "Please enter an integer between 20 and 1000."
+                print("Cycle2")
             elif withdraw_amount > account_bal:
-                message = "Amount exceeds current balance."  
-            if self.check_atm_balance() < withdraw_amount:
+                message = "Amount exceeds current balance." 
+                print("Cycle3")
+            elif self.check_atm_balance() < withdraw_amount:
                 message = "Amount exceeds current ATM balance. Please contact an administrator."
+                print("Cycle4")
                 
             # Check if amount is valid
             # Else successfully withdraw amount
             else:
                 account_bal -= withdraw_amount
-                withdraw_amount = withdraw_amount * -1
                 print(withdraw_amount, 'withdraw from atm')
                 result = self.bankSystem.update(self.username, 'balance', account_bal)
                 self.interface.change_atm_balance(withdraw_amount)
                 error_msg = shelf_error_check(result)
                 if error_msg:
                     message = error_msg
+                    print("Cycle6")
                 else:
-                    message = "Withdrawal of %d successful.\n New Balance: %d" % (-1*withdraw_amount, account_bal)
+                    message = "Withdrawal of %d successful.\n New Balance: %d" % (withdraw_amount, account_bal)
+                    print("Cycle7")
         print(message)
         return message
 
@@ -146,29 +151,32 @@ class ATM:
         if error_msg:
             message = error_msg
         else:
-            if self.bankSystem.select(destination):
-                if not isinstance(deposit, int) or deposit < 20 or deposit > 1000:  # check if input is valid
-                    message = "Please enter an integer between 20 and 1000."
-                elif deposit > account_bal:  # Check if deposit exceeds balance of user
-                    message = "Amount exceeds current balance"
-                else:
-                    account_bal -= deposit
-                    destination_bal = self.bankSystem.select(destination, 'balance')
-                    print("dest:", destination_bal)
-                    error_msg = shelf_error_check(destination_bal)
-                    if error_msg:
-                        message = error_msg
+            try:
+                if self.bankSystem.select(destination):
+                    if not isinstance(deposit, int) or deposit < 20 or deposit > 1000:  # check if input is valid
+                        message = "Please enter an integer between 20 and 1000."
+                    elif deposit > account_bal:  # Check if deposit exceeds balance of user
+                        message = "Amount exceeds current balance"
                     else:
-                        result1 = self.bankSystem.update(self.username, 'balance', account_bal)
-                        result2 = self.bankSystem.update(destination, 'balance', destination_bal + deposit)
-                        if result1 == "Error" or result2 == "Error":
-                            message = "System Error"
-                        elif not result1 or not result2:
-                            message = "Data Error"
+                        account_bal -= deposit
+                        destination_bal = self.bankSystem.select(destination, 'balance')
+                        print("dest:", destination_bal)
+                        error_msg = shelf_error_check(destination_bal)
+                        if error_msg:
+                            message = error_msg
                         else:
-                            message = "%d successfully transferred to %s" % (deposit, destination)
-            else:
-                message = "Please specify a valid username."
+                            result1 = self.bankSystem.update(self.username, 'balance', account_bal)
+                            result2 = self.bankSystem.update(destination, 'balance', destination_bal + deposit)
+                            if result1 == "Error" or result2 == "Error":
+                                message = "System Error"
+                            elif not result1 or not result2:
+                                message = "Data Error"
+                            else:
+                                message = "%d successfully transferred to %s" % (deposit, destination)
+                else:
+                    message = "Please specify a valid username."
+            except:
+                "fail"
         print(message)
         return message
 
