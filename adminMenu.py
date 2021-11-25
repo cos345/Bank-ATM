@@ -59,9 +59,6 @@ class CheckATMBalance:
         # set the balance label text to extracted balance
         self.balance['text'] = balance
 
-        print(1)
-
-
 class RefillMachine:
     """Frame for refilling ATM"""
     def __init__(self, parent, atm):
@@ -92,7 +89,6 @@ class RefillMachine:
         message = self.atm.refill_machine(amount)
 
         self.message['text'] = message
-        print(1)
 
 class UnfreezeAccount:
     """Frame for unfreezing an account"""
@@ -125,8 +121,6 @@ class UnfreezeAccount:
         # Communicate with system to unfreeze account
         # return message with success/failure
         self.message['text'] = message
-
-        print(1)
 
 
 

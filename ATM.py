@@ -52,7 +52,7 @@ class ATM:
                 error_msg = shelf_error_check(failed_login)
                 if error_msg:
                     message = error_msg
-                elif failed_login >= 3:  # if user has failed to login at least 3 times
+                elif failed_login >= 2:  # if user has failed to login at least 3 times
                     # account is frozen ( unless Error occurs in shelf)
                     if self.bankSystem.update(username, 'frozen', True) != "Error":
                         message += "\nYour account is now frozen."
@@ -113,7 +113,6 @@ class ATM:
     def withdraw_funds(self, withdraw_amount):
         account_bal = self.bankSystem.select(self.username, 'balance')
         error_msg = shelf_error_check(account_bal)
-        
         if error_msg:
             message = error_msg
             print("Cycle1")
@@ -124,7 +123,7 @@ class ATM:
                 print("Cycle2")
             elif withdraw_amount > account_bal:
                 message = "Amount exceeds current balance." 
-                print("Cycle3") 
+                print("Cycle3")
             elif self.check_atm_balance() < withdraw_amount:
                 message = "Amount exceeds current ATM balance. Please contact an administrator."
                 print("Cycle4")

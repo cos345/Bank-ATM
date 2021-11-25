@@ -8,8 +8,9 @@ class BankShelf:
         try:
             s = shelve.open('bankShelf', writeback=True)
             if username in s.keys():  # check if username exists first
-                s[username][key] = value
-                result = username
+                if s[username][key] != value:
+                    s[username][key] = value
+                    result = username
             else:  # returns None if username doesn't exist
                 result = None
             s.close()

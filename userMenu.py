@@ -93,7 +93,7 @@ class TransferFunds:
         either success or error"""
         target = self.target.get()
         amount = self.amount.get()
-        message = self.atm.transfer_funds(target, int(amount))
+        message = self.atm.transfer_funds(target, amount)
         self.message['text'] = message
         # Do error checking on input
         # run function to transfer funds
