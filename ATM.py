@@ -113,6 +113,7 @@ class ATM:
     def withdraw_funds(self, withdraw_amount):
         account_bal = self.bankSystem.select(self.username, 'balance')
         error_msg = shelf_error_check(account_bal)
+        
         if error_msg:
             message = error_msg
             print("Cycle1")
@@ -123,7 +124,7 @@ class ATM:
                 print("Cycle2")
             elif withdraw_amount > account_bal:
                 message = "Amount exceeds current balance." 
-                print("Cycle3")
+                print("Cycle3") 
             elif self.check_atm_balance() < withdraw_amount:
                 message = "Amount exceeds current ATM balance. Please contact an administrator."
                 print("Cycle4")
