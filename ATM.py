@@ -79,13 +79,16 @@ class ATM:
         return message
 
     def check_balance(self):
-        account_bal = self.bankSystem.select(self.username, 'balance')
-        error_msg = shelf_error_check(account_bal)
+        print(1)
+        result = self.bankSystem.select(self.username, 'balance')
+        print(2)
+        error_msg = shelf_error_check(result)
+        print(3)
         if error_msg:
-            message = error_msg
-        else:
-            message = "Your Balance is ", account_bal
-        return account_bal
+            print(4)
+            result = error_msg
+        print(5)
+        return result
 
     def deposit_funds(self, deposit_amount):
         account_bal = self.bankSystem.select(self.username, 'balance')

@@ -58,7 +58,7 @@ class CheckBalance:
         balance = self.atm.check_balance()
         self.balance['text'] = str(balance)
         # set the balance label text to extracted balance
-        print(1)
+
 
 
 class TransferFunds:
