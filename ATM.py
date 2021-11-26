@@ -125,7 +125,7 @@ class ATM:
             print("Cycle1")
         else:
             # Check amount vs account balance
-            if withdraw_amount.isdigit():
+            if withdraw_amount.isdigit():   
                 withdraw_amount = int(withdraw_amount)
                 if withdraw_amount < 20 or withdraw_amount > 1000:
                     message = "Please enter an integer between 20 and 1000."
@@ -147,12 +147,13 @@ class ATM:
                     error_msg = shelf_error_check(result)
                     if error_msg:
                         message = error_msg
-                        print("Cycle6")
+                        print("Cycle5")
                     else:
                         message = "Withdrawal of %d successful.\n New Balance: %d" % (withdraw_amount, account_bal)
-                        print("Cycle7")
+                        print("Cycle6")
             else:
                 message = "Please enter an integer between 20 and 1000."
+                print("Cycle7")
         print(message)
         return message
 
