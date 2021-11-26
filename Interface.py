@@ -26,6 +26,10 @@ class Interface:
             shelf["balance"] = bal + amount
         return message
 
+    def manual_atm_balance_change(self, amount):
+        shelf = shelve.open("ATM_File", writeback=True)
+        shelf["balance"] = amount
+
     def check_current_user(self):
         shelf = shelve.open("ATM_File", writeback=False)
         if "current_user" not in shelf.keys():
