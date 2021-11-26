@@ -79,15 +79,15 @@ class ATM:
         return message
 
     def check_balance(self):
-        print(1)
+        print("Cycle1")
         result = self.bankSystem.select(self.username, 'balance')
-        print(2)
+        print("Cycle2")
         error_msg = shelf_error_check(result)
-        print(3)
+        print("Cycle3")
         if error_msg:
-            print(4)
+            print("Cycle4")
             result = error_msg
-        print(5)
+        print("Cycle5")
         return result
 
     def deposit_funds(self, deposit_amount):
